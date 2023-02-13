@@ -41,9 +41,7 @@ const startParsingMode = CaTeXMode.math;
 /// [DefaultTextStyle].
 class CaTeX extends StatefulWidget {
   /// Constructs a [CaTeX] widget from an [input] string.
-  const CaTeX(this.input, {super.key})
-      // ignore: unnecessary_null_comparison
-      : assert(input != null);
+  const CaTeX(this.input, {super.key});
 
   /// TeX input string that should be rendered by CaTeX.
   final String input;
@@ -59,7 +57,6 @@ class _CaTeXState extends State<CaTeX> {
   void _parse() {
     _exception = null;
     try {
-      // ignore: avoid_redundant_argument_values
       _rootNode = Parser(widget.input).parse()!.createWidget(
             defaultCaTeXContext.copyWith(
               color: DefaultTextStyle.of(context).style.color,

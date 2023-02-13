@@ -24,8 +24,7 @@ double pixelSpacingFromCharacters({
       ? _Spacing.ord
       : symbols[CaTeXMode.math]![current]?.group.asSpacingType ?? _Spacing.ord;
   return _spacings[previousSpacingType]![currentSpacingType]
-          ?.convertToPx(fontSize) ??
-      0;
+      .convertToPx(fontSize);
 }
 
 /// Three types of spacing based on https://www.overleaf.com/learn/latex/Spacing_in_math_mode?nocdn=true.

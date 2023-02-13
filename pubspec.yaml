@@ -15,13 +15,13 @@ dependencies:
 
   # The direct meta dependency is used only for tooling purposes.
   # Meta is included in the Flutter SDK by default as a transitive dependency anyway.
-  meta: ^1.1.8
+  meta: ^1.8.0
   path: ^1.8.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lint: ^1.2.0 # https://pub.dev/packages/lint
+  lint: ^2.0.1 # https://pub.dev/packages/lint
 
 flutter:
   # These fonts are forked from https://github.com/KaTeX/katex-fonts.

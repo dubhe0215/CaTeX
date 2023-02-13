@@ -25,7 +25,6 @@ abstract class CaTeXException implements Exception {
   ///
   /// This message is returned from [toString] as well.
   String get message =>
-      // ignore: missing_whitespace_between_adjacent_strings
       '$CaTeXException during $_during: $_reason, for input: $_input'
       // Only show the help part of the exception in debug mode as
       // users will most likely not benefit from seeing this message at all.

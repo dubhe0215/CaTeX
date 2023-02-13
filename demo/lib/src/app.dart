@@ -23,7 +23,7 @@ class DemoApp extends StatelessWidget {
         url: gitHubUrl,
         child: Image.network(gitHubIconUrl),
       ),
-      LinkButton(
+      const LinkButton(
         label: docsLabel,
         url: docsUrl,
       ),

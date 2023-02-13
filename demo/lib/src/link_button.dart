@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 class LinkButton extends StatelessWidget {
   /// Constructs a [LinkButton] from a [label], a [url], and an optional
   /// [child].
-  LinkButton({
+  const LinkButton({
     super.key,
     required this.label,
     required this.url,
@@ -21,7 +21,7 @@ class LinkButton extends StatelessWidget {
   /// Icon for this button.
   ///
   /// Can be left null.
-  late Widget? child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

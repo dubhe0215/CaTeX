@@ -255,9 +255,6 @@ class RenderTree extends RenderBox with RenderObjectWithChildMixin<RenderNode> {
   bool get sizedByParent => false;
 
   @override
-  RenderNode<NodeParentData>? get child => super.child;
-
-  @override
   bool hitTest(BoxHitTestResult result, {Offset? position}) => true;
 
   @override

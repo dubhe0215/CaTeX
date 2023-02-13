@@ -8,13 +8,12 @@ List<String> get equations => [
       r'\eta = 7^\frac{4}{2}',
       r'\epsilon = \frac 2 {3 + 2}',
       r'x_{initial} = \frac {20x} {\frac{15}{3}}',
-      // ignore: no_adjacent_strings_in_list
-      r'\colorbox{red}{bunt} \boxed{ '
-          r'\rm{\sf{\bf{'
-          r'\textcolor{red} s \textcolor{pink}  i \textcolor{purple}m '
-          r'\textcolor{blue}p \textcolor{cyan}  l \textcolor{teal}  e} '
-          r'\textcolor{lime}c \textcolor{yellow}l \textcolor{amber} u '
-          r'\textcolor{orange} b}}}',
+      r'\colorbox{red}{bunt} \boxed{ ',
+      r'\rm{\sf{\bf{',
+      r'\textcolor{red} s \textcolor{pink}  i \textcolor{purple}m ',
+      r'\textcolor{blue}p \textcolor{cyan}  l \textcolor{teal}  e} ',
+      r'\textcolor{lime}c \textcolor{yellow}l \textcolor{amber} u ',
+      r'\textcolor{orange} b}}}',
       r'\TeX',
       r'\LaTeX',
       r'\KaTeX',
@@ -24,9 +23,8 @@ List<String> get equations => [
       r'12^{\frac{\frac{2}{7}}{1}}',
       r'\varepsilon = \frac{\frac{2}{1}}{3}',
       r'\alpha\beta\gamma\delta',
-      // ignore: no_adjacent_strings_in_list
-      r'\colorbox{black}{\textcolor{white} {black} } \colorbox{white} '
-          r'{\textcolor{black} {white} }',
+      r'\colorbox{black}{\textcolor{white} {black} } \colorbox{white} ',
+      r'{\textcolor{black} {white} }',
       r'\alpha\ \beta\ \ \gamma\ \ \ \delta',
       r'\epsilon = \frac{2}{3 + 2}',
       r'\tt {type} \textcolor{teal}{\rm{\tt {writer} }}',
@@ -187,8 +185,7 @@ class _ToggleEquationState extends State<ToggleEquation> {
     if (_showSource) {
       return Text(
         widget.equation,
-        // ignore: deprecated_member_use
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.titleMedium,
         textAlign: TextAlign.center,
       );
     }

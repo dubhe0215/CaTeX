@@ -18,7 +18,6 @@ Future<void> main(List<String> args) async {
   if (file.existsSync()) file.deleteSync();
   file.createSync();
 
-  // ignore: omit_local_variable_types
   final List<String> lines = [...header.split('\\n')];
   final Map<String, String> macros = {};
 

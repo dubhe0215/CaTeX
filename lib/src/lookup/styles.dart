@@ -27,8 +27,8 @@ enum CaTeXStyle {
 // ignore: public_member_api_docs
 class CaTeXStyleData {
   // Ignore the warning until this is implemented.
-  // ignore: avoid_positional_boolean_parameters, public_member_api_docs
-  const CaTeXStyleData(this.id, this.size, this.cramped);
+  // ignore: public_member_api_docs
+  const CaTeXStyleData(this.id, this.size, {required this.cramped});
 
   // ignore: public_member_api_docs
   final int id;
@@ -133,14 +133,14 @@ const List<CaTeXStyle> _text = [
 
 // ignore: public_member_api_docs
 const styles = <CaTeXStyle, CaTeXStyleData>{
-  CaTeXStyle.d: CaTeXStyleData(0, 0, false),
-  CaTeXStyle.dc: CaTeXStyleData(1, 0, true),
-  CaTeXStyle.t: CaTeXStyleData(2, 1, false),
-  CaTeXStyle.tc: CaTeXStyleData(3, 1, true),
-  CaTeXStyle.s: CaTeXStyleData(4, 2, false),
-  CaTeXStyle.sc: CaTeXStyleData(5, 2, true),
-  CaTeXStyle.ss: CaTeXStyleData(6, 3, false),
-  CaTeXStyle.ssc: CaTeXStyleData(7, 3, true),
+  CaTeXStyle.d: CaTeXStyleData(0, 0, cramped: false),
+  CaTeXStyle.dc: CaTeXStyleData(1, 0, cramped: true),
+  CaTeXStyle.t: CaTeXStyleData(2, 1, cramped: false),
+  CaTeXStyle.tc: CaTeXStyleData(3, 1, cramped: true),
+  CaTeXStyle.s: CaTeXStyleData(4, 2, cramped: false),
+  CaTeXStyle.sc: CaTeXStyleData(5, 2, cramped: true),
+  CaTeXStyle.ss: CaTeXStyleData(6, 3, cramped: false),
+  CaTeXStyle.ssc: CaTeXStyleData(7, 3, cramped: true),
 };
 
 /// [CaTeXStyleData] for [CaTeXStyle.d].
