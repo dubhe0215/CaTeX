@@ -29,11 +29,7 @@ class Parser {
     return Parser._(ParsingContext(input, mode));
   }
 
-  Parser._(ParsingContext context)
-      : assert(context != null),
-        assert(context.input != null),
-        assert(context.mode != null),
-        _context = context;
+  Parser._(ParsingContext context) : _context = context;
 
   final ParsingContext _context;
 
@@ -41,24 +37,24 @@ class Parser {
   ParsingContext get rootContext => _context;
 
   /// [ParsingNode] that is the result of parsing the [rootContext].
-  ParsingNode get rootNode => _rootNode;
+  ParsingNode? get rootNode => _rootNode;
 
-  ParsingNode _rootNode;
-  String _input;
-  int _index;
-  _State _state;
-  _Token _token;
-  String _tokenInput;
+  ParsingNode? _rootNode;
+  String? _input;
+  int? _index;
+  _State? _state;
+  _Token? _token;
+  String? _tokenInput;
 
   // todo: build proper solution
   /// Stores the latest parsed function in order to determine the [CaTeXMode]
   /// for a group.
-  ParsingContext _lastFunctionToken;
+  ParsingContext? _lastFunctionToken;
 
   /// Parses the [rootContext] and populates the [rootNode].
   ///
   /// It is safe to call this multiple times.
-  ParsingNode parse() {
+  ParsingNode? parse() {
     assert(_state == null);
     assert(_input == null);
     assert(_index == null);
@@ -68,7 +64,7 @@ class Parser {
 
     // Catch exceptions while parsing and throw them after disposing
     // in order to make sure that the parser is properly disposed.
-    CaTeXException exception;
+    CaTeXException? exception;
     try {
       _rootNode = _parse();
     } on CaTeXException catch (e) {
@@ -108,24 +104,24 @@ class Parser {
   /// like 5k length at least, even with the current inefficient strategy.
   /// When new lines would be implemented, the new line should probably break
   /// the recursions new lines are handled completely independently anyways.
-  ParsingNode _parse() {
+  ParsingNode? _parse() {
     switch (_state) {
       case _State.N:
         _state = _charIs(CharacterCategory.space) ? _State.S : _State.M;
         return _parse();
       case _State.S:
-        assert(_tokenInput.isEmpty);
+        assert(_tokenInput!.isEmpty);
 
         if (_charIs(CharacterCategory.space)) {
-          _input = _input.substring(1);
-          _index++;
+          _input = _input!.substring(1);
+          _index = _index! + 1;
 
           // Workaround solution for inserting a single space (no matter how
           // many there actually are) in text mode.
           if (_context.mode == CaTeXMode.text &&
               (_rootNode == null ||
-                  !(_group.children.last is CharacterNode &&
-                      _group.children.last.context.input == ' '))) {
+                  !(_group!.children.last is CharacterNode &&
+                      _group!.children.last!.context.input == ' '))) {
             _addNode(CharacterNode(_context.copyWith(input: ' ')));
           }
         } else {
@@ -158,9 +154,10 @@ class Parser {
               // It is either handled in _extractGroup or in a
               // different token mode.
               throw ParsingException(
-                  reason: 'Found unescaped end of group character without '
-                      'an open group at position $_index',
-                  input: _context.input);
+                reason: 'Found unescaped end of group character without '
+                    'an open group at position $_index',
+                input: _context.input,
+              );
             }
             if (_charIs(CharacterCategory.beginningOfGroup)) {
               // Add what comes after the beginning of group character
@@ -187,7 +184,8 @@ class Parser {
               _consumeChar();
               return _parse();
             }
-            final token = _consumeToken(), macro = macros[token.input];
+            final token = _consumeToken();
+            final macro = macros[token.input];
 
             if (macro == null) {
               final function = _parseFunctionNode(token);
@@ -200,11 +198,12 @@ class Parser {
             _skipSpaces();
             return _parse();
           case _Token.controlSymbol:
-            if (_input.isEmpty) {
+            if (_input!.isEmpty) {
               throw ParsingException(
-                  reason: 'Expected at least one character after escape '
-                      'character at position $_index',
-                  input: _context.input);
+                reason: 'Expected at least one character after escape '
+                    'character at position $_index',
+                input: _context.input,
+              );
             }
             if (_charIs(CharacterCategory.letter)) {
               // Letters after an escape character are handled
@@ -224,7 +223,7 @@ class Parser {
               _token = _Token.controlSymbol;
               return _parse();
             }
-            if (_input.isNotEmpty) {
+            if (_input!.isNotEmpty) {
               _token = _Token.character;
               return _parse();
             }
@@ -238,14 +237,14 @@ class Parser {
     }
     // We have a GroupNode here because of the way
     // _addNode is set up to always construct a GroupNode.
-    final children = _group.children;
+    final children = _group!.children;
 
     // This is a noop if there are no functions.
     _assembleFunctions(children);
 
     if (children.length == 1) {
       // No need to wrap a single child in a group.
-      return _group.children[0];
+      return _group!.children[0];
     }
 
     _unpackGroups(children);
@@ -258,16 +257,16 @@ class Parser {
   ///
   /// The current character is the character at position 0 of [_input].
   bool _charIs(CharacterCategory category) {
-    if (_input.isEmpty) return false;
-    return category.matches(_input.substring(0, 1));
+    if (_input!.isEmpty) return false;
+    return category.matches(_input!.substring(0, 1));
   }
 
   /// Adds the current char to the current [_tokenInput].
   void _consumeChar() {
-    assert(_input.isNotEmpty);
-    _tokenInput += _input.substring(0, 1);
-    _input = _input.substring(1);
-    _index++;
+    assert(_input!.isNotEmpty);
+    _tokenInput = _tokenInput! + _input!.substring(0, 1);
+    _input = _input!.substring(1);
+    _index = _index! + 1;
   }
 
   ParsingContext _consumeToken() {
@@ -284,23 +283,23 @@ class Parser {
     return _context.copyWith(input: token);
   }
 
-  GroupNode get _group {
+  GroupNode? get _group {
     assert(_rootNode is GroupNode);
-    return _rootNode as GroupNode;
+    return _rootNode as GroupNode?;
   }
 
-  void _addNode(ParsingNode node) {
+  void _addNode(ParsingNode? node) {
     _rootNode ??= GroupNode(_context);
-    _group.children.add(node);
+    _group!.children.add(node);
   }
 
   void _skipSpaces() {
-    assert(_tokenInput.isEmpty);
+    assert(_tokenInput!.isEmpty);
     _token = null;
     _state = _State.S;
   }
 
-  ParsingNode _parseFunctionNode(ParsingContext token) {
+  ParsingNode? _parseFunctionNode(ParsingContext token) {
     // todo: do not use workaround solution
     _lastFunctionToken = token;
 
@@ -315,7 +314,7 @@ class Parser {
   ///
   /// It is not as easy as finding the next closing character because
   /// groups can be nested.
-  ParsingNode _extractGroup() {
+  ParsingNode? _extractGroup() {
     // todo: do not use workaround solution
     final mode = textModeSwitchingFunctions
             .contains(supportedFunctionNames[_lastFunctionToken?.input])
@@ -334,7 +333,7 @@ class Parser {
     // character was consumed before this method was called.
     var openGroups = 1;
 
-    while (_input.isNotEmpty) {
+    while (_input!.isNotEmpty) {
       if (_charIs(CharacterCategory.escapeCharacter)) {
         // Consume the next two characters at once, which is equivalent
         // to escaping the next character as it might be an end of group char.
@@ -363,9 +362,9 @@ class Parser {
 
     if (openGroups > 0) {
       throw ParsingException(
-          reason:
-              'Expected } after the group was opened at position $beginning',
-          input: _context.input);
+        reason: 'Expected } after the group was opened at position $beginning',
+        input: _context.input,
+      );
     }
 
     final groupParser = Parser._(
@@ -381,40 +380,44 @@ class Parser {
 
   /// Moves nodes that would belong to the root node of this parser
   /// to functions according to the number of arguments they require.
-  void _assembleFunctions(List<ParsingNode> nodes) {
+  void _assembleFunctions(List<ParsingNode?> nodes) {
     // Need to copy the list (List.of) in order to prevent
     // concurrent modification.
-    final functions = List.of(nodes
-        // Reverse the order before the nodes are sorted in order to assemble
-        // the arguments of functions before they are assembled
-        // (when a function has a function as an argument;
-        // both have the same greediness).
-        .reversed
-        .whereType<FunctionNode>()
-        // It is possible that a function node has already been assembled.
-        // For example, if we have `\frac{\frac{1}{2}}{3}`, the second frac will be
-        // turned into a [FracNode] in the root node instead of a
-        // [GroupNode] because it is the only node in that group after that
-        // group has been parsed. Because of this, we need a way to check
-        // if the second frac has already been assembled in its subgroup.
-        // A way to do this is checking the children;
-        // if there are none, the function node has not yet been assembled
-        .where((node) => node._children.isEmpty));
+    final functions = List.of(
+      nodes
+          // Reverse the order before the nodes are sorted in order to assemble
+          // the arguments of functions before they are assembled
+          // (when a function has a function as an argument;
+          // both have the same greediness).
+          .reversed
+          .whereType<FunctionNode>()
+          // It is possible that a function node has already been assembled.
+          // For example, if we have `\frac{\frac{1}{2}}{3}`, the second frac will be
+          // turned into a [FracNode] in the root node instead of a
+          // [GroupNode] because it is the only node in that group after that
+          // group has been parsed. Because of this, we need a way to check
+          // if the second frac has already been assembled in its subgroup.
+          // A way to do this is checking the children;
+          // if there are none, the function node has not yet been assembled
+          .where((node) => node._children.isEmpty),
+    );
     if (functions.isEmpty) return;
 
     // The function nodes with the highest greediness should be assembled first.
     functions.sort(
-        (a, b) => b.properties.greediness.compareTo(a.properties.greediness));
+      (a, b) => b.properties.greediness.compareTo(a.properties.greediness),
+    );
 
     for (final function in functions) {
-      final index = nodes.indexOf(function),
-          arguments = function.properties.arguments;
+      final index = nodes.indexOf(function);
+      final arguments = function.properties.arguments;
 
       if (index + arguments >= nodes.length) {
         throw ParsingException(
-            reason: 'Missing arguments for ${function.context.input}; '
-                'expected $arguments but got ${nodes.length - index - 1}',
-            input: _context.input);
+          reason: 'Missing arguments for ${function.context.input}; '
+              'expected $arguments but got ${nodes.length - index - 1}',
+          input: _context.input,
+        );
       }
 
       assert(() {
@@ -425,7 +428,8 @@ class Parser {
           's are required to subclass $SingleChildNode when they '
           'have 1 argument and $MultiChildNode otherwise.');
 
-      final start = index + 1, end = start + arguments;
+      final start = index + 1;
+      final end = start + arguments;
       // Move the necessary nodes to the function.
       if (arguments == 1) {
         (function as SingleChildNode).child = nodes[start];
@@ -442,11 +446,11 @@ class Parser {
   /// compute spacing during rendering correctly, i.e. `=: 5` should render
   /// the same way `{=}{:5}` does. If groups were not unpacked,
   /// spacing would be messed up in the second example.
-  void _unpackGroups(List<ParsingNode> children) {
+  void _unpackGroups(List<ParsingNode?> children) {
     children.replaceRange(
       0,
       children.length,
-      children.fold<List<ParsingNode>>(<ParsingNode>[],
+      children.fold<List<ParsingNode?>>(<ParsingNode?>[],
           (previousValue, element) {
         if (element is GroupNode) {
           previousValue.addAll(element.children);
@@ -492,9 +496,7 @@ enum _State {
 /// to be passed down the tree while parsing.
 class ParsingContext {
   /// Constructs a [ParsingContext] from an [input] string a parsing [mode].
-  const ParsingContext(this.input, this.mode)
-      : assert(input != null),
-        assert(mode != null);
+  const ParsingContext(this.input, this.mode);
 
   /// The input in the part of the tree that the context describes.
   final String input;
@@ -504,8 +506,8 @@ class ParsingContext {
 
   /// Returns a new [ParsingContext] with overridden properties.
   ParsingContext copyWith({
-    String input,
-    CaTeXMode mode,
+    String? input,
+    CaTeXMode? mode,
   }) =>
       ParsingContext(input ?? this.input, mode ?? this.mode);
 
@@ -527,7 +529,7 @@ class ParsingContext {
 /// the configuration of the node in the resulting rendering tree.
 abstract class ParsingNode<R extends RenderNode> {
   /// Constructs a [ParsingNode] given a [context].
-  const ParsingNode(this.context) : assert(context != null);
+  const ParsingNode(this.context);
 
   /// The context for the part of the tree that the node represents.
   ///
@@ -539,9 +541,8 @@ abstract class ParsingNode<R extends RenderNode> {
   /// Note: override [configureWidget] in subclasses and not this method.
   NodeWidget createWidget(CaTeXContext context) {
     // Adjusts the input based on the parsing context.
-    final result = configureWidget(context.copyWith(input: this.context.input));
-    assert(result != null,
-        'Override configureWidget and return a widget for a node.');
+    final result =
+        configureWidget(context.copyWith(input: this.context.input))!;
     return result;
   }
 
@@ -564,7 +565,7 @@ abstract class ParsingNode<R extends RenderNode> {
   /// The context can be modified using [CaTeXContext.copyWith] for children.
   @mustCallSuper
   @protected
-  NodeWidget<R> configureWidget(CaTeXContext context) {
+  NodeWidget<R>? configureWidget(CaTeXContext context) {
     assert(
         context.input == this.context.input,
         'Do not override createWidget and do not call configureWidget. '
@@ -592,7 +593,7 @@ abstract class ChildrenNode<R extends RenderNode> extends ParsingNode<R> {
   /// It might be a suboptimal solution in terms of immutability, however,
   /// I found it to work quite well, especially because the nodes are
   /// controlled only within the package.
-  final List<ParsingNode> _children;
+  final List<ParsingNode?> _children;
 }
 
 /// Super class for nodes that configure multiple children.
@@ -603,7 +604,7 @@ abstract class MultiChildNode<R extends RenderNode> extends ChildrenNode<R> {
   MultiChildNode(ParsingContext context) : super(context);
 
   /// Returns the full list of children that a [ChildrenNode] stores.
-  List<ParsingNode> get children => _children;
+  List<ParsingNode?> get children => _children;
 }
 
 /// Super class for nodes that configure a single child.
@@ -614,9 +615,9 @@ abstract class SingleChildNode<R extends RenderNode> extends ChildrenNode<R> {
   SingleChildNode(ParsingContext context) : super(context);
 
   /// Returns the single child accessible to a [SingleChildNode].
-  ParsingNode get child => _children[0];
+  ParsingNode? get child => _children[0];
 
-  set child(ParsingNode node) {
+  set child(ParsingNode? node) {
     assert(_children.isEmpty, 'A child must only be assigned once.');
     _children.add(node);
   }
@@ -626,6 +627,7 @@ abstract class SingleChildNode<R extends RenderNode> extends ChildrenNode<R> {
 ///
 /// Every function node needs this mixin in order for the parsing to work.
 mixin FunctionNode<R extends RenderNode> on ChildrenNode<R> {
+  // ignore: public_member_api_docs
   FunctionProperties get properties;
 }
 

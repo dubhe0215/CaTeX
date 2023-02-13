@@ -28,7 +28,7 @@ Future<void> main(List<String> args) async {
     String rewrite,
   ) {
     assert(
-      name != null && rewrite != null && !macros.containsKey(name),
+      !macros.containsKey(name),
       'Input `defineMacro($name, $rewrite)` is invalid.',
     );
 
@@ -54,8 +54,10 @@ Future<void> main(List<String> args) async {
   defineMacro("\\\\Harr", "\\\\Leftrightarrow");
   defineMacro("\\\\hearts", "\\\\heartsuit");
 
-  defineMacro("\\\\TeX",
-      "\\\\rm{T\\\\kern{-.1667em}\\\\raisebox{-.5ex}{E}\\\\kern{-.125em}X}");
+  defineMacro(
+    "\\\\TeX",
+    "\\\\rm{T\\\\kern{-.1667em}\\\\raisebox{-.5ex}{E}\\\\kern{-.125em}X}",
+  );
   defineMacro(
       "\\\\LaTeX",
       "\\\\rm{L\\\\kern{-.36em}\\\\raisebox{.205em}{\\\\scriptstyle A} "

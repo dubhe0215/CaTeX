@@ -7,7 +7,7 @@ homepage: https://github.com/simpleclub/CaTeX
 
 environment:
   # At most stable constraint as defined at https://dart.dev/get-dart#release-channels.
-  sdk: ">=2.8.1 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -16,12 +16,12 @@ dependencies:
   # The direct meta dependency is used only for tooling purposes.
   # Meta is included in the Flutter SDK by default as a transitive dependency anyway.
   meta: ^1.1.8
+  path: ^1.8.2
 
 dev_dependencies:
-  lint: ^1.2.0 # https://pub.dev/packages/lint
-
   flutter_test:
     sdk: flutter
+  lint: ^1.2.0 # https://pub.dev/packages/lint
 
 flutter:
   # These fonts are forked from https://github.com/KaTeX/katex-fonts.

@@ -3,7 +3,9 @@ import 'package:catex/src/parsing/parsing.dart';
 import 'package:catex/src/rendering/empty.dart';
 import 'package:catex/src/widgets.dart';
 
+// ignore: public_member_api_docs
 class EmptyNode extends LeafNode<RenderEmpty> {
+  // ignore: public_member_api_docs
   EmptyNode(ParsingContext context) : super(context);
 
   @override

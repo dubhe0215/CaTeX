@@ -23,11 +23,11 @@ class TextNode extends SingleChildNode<RenderText>
   NodeWidget<RenderText> configureWidget(CaTeXContext context) {
     super.configureWidget(context);
 
-    final function = supportedFunctionNames[context.input];
+    final function = supportedFunctionNames[context.input!];
 
-    FontWeight weight;
-    FontStyle style;
-    String family;
+    FontWeight? weight;
+    FontStyle? style;
+    String? family;
 
     // The different functions override different parts of the font style.
     switch (function) {
@@ -64,11 +64,13 @@ class TextNode extends SingleChildNode<RenderText>
       context,
       createRenderNode,
       children: [
-        child.createWidget(context.copyWith(
-          fontWeight: weight,
-          fontStyle: style,
-          fontFamily: family,
-        )),
+        child!.createWidget(
+          context.copyWith(
+            fontWeight: weight,
+            fontStyle: style,
+            fontFamily: family,
+          ),
+        ),
       ],
     );
   }

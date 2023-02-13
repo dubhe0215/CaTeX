@@ -37,12 +37,12 @@ class LinkButton extends StatelessWidget {
     );
 
     if (child == null) {
-      result = FlatButton(
+      result = TextButton(
         onPressed: onPressed,
         child: result,
       );
     } else {
-      result = FlatButton.icon(
+      result = TextButton.icon(
         onPressed: onPressed,
         label: result,
         icon: ConstrainedBox(

@@ -7,8 +7,10 @@ import 'package:catex/src/parsing/parsing.dart';
 import 'package:catex/src/rendering/functions/font.dart';
 import 'package:catex/src/widgets.dart';
 
+// ignore: public_member_api_docs
 class FontNode extends SingleChildNode<RenderFont>
     implements FunctionNode<RenderFont> {
+  // ignore: public_member_api_docs
   FontNode(ParsingContext context) : super(context);
 
   @override
@@ -19,11 +21,11 @@ class FontNode extends SingleChildNode<RenderFont>
   NodeWidget<RenderFont> configureWidget(CaTeXContext context) {
     super.configureWidget(context);
 
-    final function = supportedFunctionNames[context.input];
+    final function = supportedFunctionNames[context.input!];
 
-    FontWeight weight;
-    FontStyle style;
-    String family;
+    FontWeight? weight;
+    FontStyle? style;
+    String? family;
 
     // The different functions override different parts of the font style.
     switch (function) {
@@ -59,11 +61,13 @@ class FontNode extends SingleChildNode<RenderFont>
       context,
       createRenderNode,
       children: [
-        child.createWidget(context.copyWith(
-          fontWeight: weight,
-          fontStyle: style,
-          fontFamily: family,
-        )),
+        child!.createWidget(
+          context.copyWith(
+            fontWeight: weight,
+            fontStyle: style,
+            fontFamily: family,
+          ),
+        ),
       ],
     );
   }

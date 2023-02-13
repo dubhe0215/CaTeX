@@ -4,7 +4,9 @@ import 'package:catex/src/parsing/parsing.dart';
 import 'package:catex/src/rendering/functions/boxed.dart';
 import 'package:catex/src/widgets.dart';
 
+// ignore: public_member_api_docs
 class BoxedNode extends SingleChildNode<RenderBoxed> with FunctionNode {
+  // ignore: public_member_api_docs
   BoxedNode(ParsingContext context) : super(context);
 
   @override
@@ -18,7 +20,7 @@ class BoxedNode extends SingleChildNode<RenderBoxed> with FunctionNode {
     return NodeWidget(
       context,
       createRenderNode,
-      children: [child.createWidget(context)],
+      children: [child!.createWidget(context)],
     );
   }
 

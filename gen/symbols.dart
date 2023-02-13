@@ -24,42 +24,41 @@ Future<void> main(List<String> args) async {
   file.createSync();
 
   // ignore: omit_local_variable_types
-  final List<String> lines = [...header.split('\\n')],
-      mathSymbols = [],
-      textSymbols = [];
+  final List<String> lines = [...header.split('\\n')];
+  final List<String> mathSymbols = [];
+  final List<String> textSymbols = [];
 
-  const math = 'math',
-      text = 'text',
-      main = 'main',
-      ams = 'ams',
-      accent = 'accent',
-      bin = 'bin',
-      close = 'close',
-      inner = 'inner',
-      mathord = 'mathord',
-      op = 'op',
-      open = 'open',
-      punct = 'punct',
-      rel = 'rel',
-      spacing = 'spacing',
-      textord = 'textord';
+  const math = 'math';
+  const text = 'text';
+  const main = 'main';
+  const ams = 'ams';
+  const accent = 'accent';
+  const bin = 'bin';
+  const close = 'close';
+  const inner = 'inner';
+  const mathord = 'mathord';
+  const op = 'op';
+  const open = 'open';
+  const punct = 'punct';
+  const rel = 'rel';
+  const spacing = 'spacing';
+  const textord = 'textord';
 
   void defineSymbol(
     String mode,
     String font,
     String group,
-    String unicode,
+    String? unicode,
     String name, [
     // ignore: avoid_positional_boolean_parameters
     bool createUnicodeEntry = false,
   ]) {
     assert(
-      mode?.isNotEmpty == true &&
-          font?.isNotEmpty == true &&
-          group?.isNotEmpty == true &&
-          (unicode == null || unicode?.isNotEmpty == true) &&
-          name?.isNotEmpty == true &&
-          createUnicodeEntry != null,
+      mode.isNotEmpty == true &&
+          font.isNotEmpty == true &&
+          group.isNotEmpty == true &&
+          (unicode == null || unicode.isNotEmpty == true) &&
+          name.isNotEmpty == true,
       'Input `defineSymbol($mode, $font, $group, $unicode, $name)` is invalid.',
     );
 
@@ -563,7 +562,13 @@ Future<void> main(List<String> args) async {
   defineSymbol(math, main, close, ")", "\\\\rparen", true);
   defineSymbol(text, main, textord, "<", "\\\\textless", true); // in T1 fontenc
   defineSymbol(
-      text, main, textord, ">", "\\\\textgreater", true); // in T1 fontenc
+    text,
+    main,
+    textord,
+    ">",
+    "\\\\textgreater",
+    true,
+  ); // in T1 fontenc
   defineSymbol(math, main, open, "\\u230a", "\\\\lfloor", true);
   defineSymbol(math, main, close, "\\u230b", "\\\\rfloor", true);
   defineSymbol(math, main, open, "\\u2308", "\\\\lceil", true);
@@ -609,7 +614,12 @@ Future<void> main(List<String> args) async {
   defineSymbol(math, main, inner, "\\u22ef", "\\\\@cdots", true);
   defineSymbol(math, main, inner, "\\u22f1", "\\\\ddots", true);
   defineSymbol(
-      math, main, textord, "\\u22ee", "\\\\varvdots"); // \\vdots is a macro
+    math,
+    main,
+    textord,
+    "\\u22ee",
+    "\\\\varvdots",
+  ); // \\vdots is a macro
   defineSymbol(math, main, accent, "\\u02ca", "\\\\acute");
   defineSymbol(math, main, accent, "\\u02cb", "\\\\grave");
   defineSymbol(math, main, accent, "\\u00a8", "\\\\ddot");
@@ -644,7 +654,12 @@ Future<void> main(List<String> args) async {
   defineSymbol(text, main, accent, "\\u00a8", '\\\\"'); // diaresis
   defineSymbol(text, main, accent, "\\u02dd", "\\\\H"); // double acute
   defineSymbol(
-      text, main, accent, "\\u25ef", "\\\\textcircled"); // \\bigcirc glyph
+    text,
+    main,
+    accent,
+    "\\u25ef",
+    "\\\\textcircled",
+  ); // \\bigcirc glyph
   defineSymbol(text, main, textord, "\\u2013", "--", true);
   defineSymbol(text, main, textord, "\\u2013", "\\\\textendash");
   defineSymbol(text, main, textord, "\\u2014", "---", true);

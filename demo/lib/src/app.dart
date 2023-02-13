@@ -3,7 +3,6 @@ import 'package:demo/src/editor.dart';
 import 'package:demo/src/link_button.dart';
 import 'package:demo/src/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Demo application for CaTeX.
@@ -34,8 +33,8 @@ class DemoApp extends StatelessWidget {
       title: appTitle,
       theme: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.amber,
-        accentColor: Colors.amberAccent,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber)
+            .copyWith(secondary: Colors.amberAccent),
       ),
       home: Scaffold(
         body: Column(

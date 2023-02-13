@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:catex/src/lookup/characters.dart';
 import 'package:catex/src/lookup/context.dart';
 import 'package:catex/src/lookup/symbols.dart';
@@ -28,16 +26,18 @@ class RenderCharacter extends RenderNode {
   /// populates the [CaTeXContext.input] with the symbol. Any other
   /// [RenderCharacter] will pass a [symbol] explicitly if the input is to be
   /// rendered using a different unicode character.
-  final SymbolData symbol;
+  final SymbolData? symbol;
 
-  TextPainter _painter;
+  late TextPainter _painter;
 
   @override
   void configure() {
-    _painter = TypesetPainter(context.copyWith(
-      // todo: solve this properly
-      input: symbol?.unicode,
-    ));
+    _painter = TypesetPainter(
+      context.copyWith(
+        // todo: solve this properly
+        input: symbol?.unicode,
+      ),
+    );
     _painter.layout();
 
     renderSize = _painter.size;
@@ -53,8 +53,7 @@ class RenderCharacter extends RenderNode {
 class TypesetPainter extends TextPainter {
   /// Constructs a typeset [TextPainter] given a [context].
   TypesetPainter(CaTeXContext context)
-      : assert(context != null),
-        super(
+      : super(
           text: TextSpan(
             text: context.input,
             style: TextStyle(
@@ -72,10 +71,10 @@ class TypesetPainter extends TextPainter {
 /// Specifies special behavior for certain characters.
 ///
 /// This can be overridden by functions, e.g. \rm.
-FontStyle _resolveFontStyle(CaTeXContext context) {
+FontStyle? _resolveFontStyle(CaTeXContext context) {
   if (context.fontStyle != null) return context.fontStyle;
 
-  if (CharacterCategory.letter.matches(context.input)) {
+  if (CharacterCategory.letter.matches(context.input!)) {
     return FontStyle.italic;
   }
 
@@ -85,7 +84,7 @@ FontStyle _resolveFontStyle(CaTeXContext context) {
 /// Specifies special behavior for certain characters.
 ///
 /// This can be overridden by functions, e.g. \rm.
-FontWeight _resolveFontWeight(CaTeXContext context) {
+FontWeight? _resolveFontWeight(CaTeXContext context) {
   if (context.fontWeight != null) return context.fontWeight;
 
   return FontWeight.normal;

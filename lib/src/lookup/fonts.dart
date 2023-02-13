@@ -2,17 +2,29 @@
 ///
 /// Note that these are the fonts taken from the KaTeX project.
 enum CaTeXFont {
+  // ignore: public_member_api_docs
   ams,
+  // ignore: public_member_api_docs
   caligraphic,
+  // ignore: public_member_api_docs
   fraktur,
+  // ignore: public_member_api_docs
   main,
+  // ignore: public_member_api_docs
   math,
+  // ignore: public_member_api_docs
   sansSerif,
+  // ignore: public_member_api_docs
   script,
+  // ignore: public_member_api_docs
   size1,
+  // ignore: public_member_api_docs
   size2,
+  // ignore: public_member_api_docs
   size3,
+  // ignore: public_member_api_docs
   size4,
+  // ignore: public_member_api_docs
   typewriter,
 }
 

@@ -4,8 +4,10 @@ import 'package:catex/src/parsing/parsing.dart';
 import 'package:catex/src/rendering/functions/sub_sup.dart';
 import 'package:catex/src/widgets.dart';
 
+// ignore: public_member_api_docs
 class SubSupNode extends SingleChildNode<RenderSubSup>
     with FunctionNode<RenderSubSup> {
+  // ignore: public_member_api_docs
   SubSupNode(ParsingContext context) : super(context);
 
   @override
@@ -20,11 +22,13 @@ class SubSupNode extends SingleChildNode<RenderSubSup>
       context,
       createRenderNode,
       children: [
-        child.createWidget(context.copyWith(
-          // todo: properly determine size reduction
-          // (some systems are already partially setup but unsupported).
-          textSize: context.textSize * .6,
-        )),
+        child!.createWidget(
+          context.copyWith(
+            // todo: properly determine size reduction
+            // (some systems are already partially setup but unsupported).
+            textSize: context.textSize! * .6,
+          ),
+        ),
       ],
     );
   }

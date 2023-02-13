@@ -1,7 +1,6 @@
 import 'package:catex/src/lookup/modes.dart';
 import 'package:catex/src/lookup/sizing.dart';
 import 'package:catex/src/lookup/symbols.dart';
-import 'package:meta/meta.dart';
 
 /// Returns the spacing that should be inserted in logical pixels based
 /// on the [previous] and [current] characters in math mode.
@@ -9,28 +8,22 @@ import 'package:meta/meta.dart';
 /// This function also accepts inputs for [previous] and [current] that are not
 /// single characters. For example, functions are treated as [_Spacing.ord]s.
 double pixelSpacingFromCharacters({
-  @required String previous,
+  required String previous,
   // todo(creativecreatorormaybenot): probably need next in order to
   // todo| allow for signed numbers
-  @required String current,
-  @required double fontSize,
+  required String current,
+  required double fontSize,
 }) {
-  assert(previous != null);
-  assert(current != null);
-  assert(fontSize != null);
-
   final previousSpacingType = previous.length != 1
-          ? _Spacing.ord
-          // todo(creativecreatorormaybenot): do not look up symbols here
-          // todo| use one lookup everywhere, i.e. use the looked up string
-          // todo| from the symbol node
-          : symbols[CaTeXMode.math][previous]?.group?.asSpacingType ??
-              _Spacing.ord,
-      currentSpacingType = current.length != 1
-          ? _Spacing.ord
-          : symbols[CaTeXMode.math][current]?.group?.asSpacingType ??
-              _Spacing.ord;
-  return _spacings[previousSpacingType][currentSpacingType]
+      ? _Spacing.ord
+      // todo(creativecreatorormaybenot): do not look up symbols here
+      // todo| use one lookup everywhere, i.e. use the looked up string
+      // todo| from the symbol node
+      : symbols[CaTeXMode.math]![previous]?.group.asSpacingType ?? _Spacing.ord;
+  final currentSpacingType = current.length != 1
+      ? _Spacing.ord
+      : symbols[CaTeXMode.math]![current]?.group.asSpacingType ?? _Spacing.ord;
+  return _spacings[previousSpacingType]![currentSpacingType]
           ?.convertToPx(fontSize) ??
       0;
 }
@@ -48,7 +41,7 @@ enum Spacing {
 }
 
 /// [Spacing] extension that adds functionality for converting to pixel values.
-extension SpacingMeasurement on Spacing {
+extension SpacingMeasurement on Spacing? {
   /// Space value in pixels; converted from math units with the help of
   /// https://tex.stackexchange.com/a/41371/192809.
   double convertToPx(double fontSize) {
@@ -83,8 +76,8 @@ enum _Spacing {
   inner,
 }
 
-extension on SymbolGroup {
-  _Spacing get asSpacingType {
+extension on SymbolGroup? {
+  _Spacing? get asSpacingType {
     switch (this) {
       case SymbolGroup.mathord:
       case SymbolGroup.textord:
@@ -105,6 +98,7 @@ extension on SymbolGroup {
         return _Spacing.inner;
       case SymbolGroup.accent:
       case SymbolGroup.spacing:
+      default:
     }
     return null;
   }

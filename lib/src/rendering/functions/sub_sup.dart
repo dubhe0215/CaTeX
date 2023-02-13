@@ -11,5 +11,6 @@ import 'package:catex/src/rendering/rendering.dart';
 /// See also:
 ///  * [RenderGroup]
 class RenderSubSup extends RenderNode with SingleChildRenderNodeMixin {
+  // ignore: public_member_api_docs
   RenderSubSup(CaTeXContext context) : super(context);
 }

@@ -12,10 +12,7 @@ abstract class CaTeXException implements Exception {
   /// [input] should be the input that was currently processed, which can
   /// be obtained from [CaTeXContext.input] most of the time.
   const CaTeXException(String reason, String input, String during)
-      : assert(reason != null),
-        assert(input != null),
-        assert(during != null),
-        _reason = reason,
+      : _reason = reason,
         _input = input,
         _during = during;
 
@@ -56,7 +53,7 @@ class ParsingException extends CaTeXException {
   /// Constructs a [ParsingException] from a [reason] and an [input].
   ///
   /// See [CaTeXException] for the meaning of those.
-  ParsingException({String reason, String input})
+  ParsingException({required String reason, required String input})
       : super(reason, input, 'parsing');
 }
 
@@ -65,7 +62,7 @@ class ConfigurationException extends CaTeXException {
   /// Constructs a [ConfigurationException] from a [reason] and an [input].
   ///
   /// See [CaTeXException] for the meaning of those.
-  ConfigurationException({String reason, String input})
+  ConfigurationException({required String reason, required String input})
       : super(reason, input, 'configuration');
 }
 
@@ -74,6 +71,6 @@ class RenderingException extends CaTeXException {
   /// Constructs a [RenderingException] from a [reason] and an [input].
   ///
   /// See [CaTeXException] for the meaning of those.
-  RenderingException({String reason, String input})
+  RenderingException({required String reason, required String input})
       : super(reason, input, 'rendering');
 }

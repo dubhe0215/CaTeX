@@ -1,10 +1,10 @@
 import 'package:catex/src/lookup/context.dart';
 import 'package:catex/src/lookup/symbols.dart';
 import 'package:catex/src/rendering/character.dart';
-import 'package:flutter/foundation.dart';
 
+// ignore: public_member_api_docs
 class RenderSymbol extends RenderCharacter {
-  RenderSymbol(CaTeXContext context, {@required SymbolData data})
-      : assert(data != null),
-        super(context.copyWith(input: data.unicode));
+  // ignore: public_member_api_docs
+  RenderSymbol(CaTeXContext context, {required SymbolData data})
+      : super(context.copyWith(input: data.unicode));
 }

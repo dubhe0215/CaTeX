@@ -5,7 +5,6 @@ import 'package:catex/src/lookup/modes.dart';
 import 'package:catex/src/lookup/styles.dart';
 import 'package:catex/src/parsing/parsing.dart';
 import 'package:catex/src/rendering/rendering.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 /// The context that will be passed to the root node in [CaTeX].
@@ -42,7 +41,8 @@ const startParsingMode = CaTeXMode.math;
 /// [DefaultTextStyle].
 class CaTeX extends StatefulWidget {
   /// Constructs a [CaTeX] widget from an [input] string.
-  const CaTeX(this.input, {Key key})
+  const CaTeX(this.input, {Key? key})
+      // ignore: unnecessary_null_comparison
       : assert(input != null),
         super(key: key);
 
@@ -54,19 +54,19 @@ class CaTeX extends StatefulWidget {
 }
 
 class _CaTeXState extends State<CaTeX> {
-  NodeWidget _rootNode;
-  CaTeXException _exception;
+  late NodeWidget _rootNode;
+  CaTeXException? _exception;
 
   void _parse() {
     _exception = null;
     try {
       // ignore: avoid_redundant_argument_values
-      _rootNode = Parser(widget.input, mode: startParsingMode)
-          .parse()
-          .createWidget(defaultCaTeXContext.copyWith(
-            color: DefaultTextStyle.of(context).style.color,
-            textSize: DefaultTextStyle.of(context).style.fontSize * 1.21,
-          ));
+      _rootNode = Parser(widget.input).parse()!.createWidget(
+            defaultCaTeXContext.copyWith(
+              color: DefaultTextStyle.of(context).style.color,
+              textSize: DefaultTextStyle.of(context).style.fontSize! * 1.21,
+            ),
+          );
     } on CaTeXException catch (e) {
       _exception = e;
     }
@@ -91,7 +91,7 @@ class _CaTeXState extends State<CaTeX> {
     if (_exception != null) {
       // Throwing the parsing exception here will make sure that it is
       // displayed by the Flutter ErrorWidget.
-      throw _exception;
+      throw _exception!;
     }
 
     // Rendering a full tree can be expensive and the tree never changes.
@@ -104,9 +104,8 @@ class _CaTeXState extends State<CaTeX> {
 class _TreeWidget extends SingleChildRenderObjectWidget {
   _TreeWidget(
     NodeWidget child, {
-    Key key,
-  })  : assert(child != null),
-        _context = child.context,
+    Key? key,
+  })  : _context = child.context,
         super(child: child, key: key);
 
   final CaTeXContext _context;
@@ -137,9 +136,8 @@ class NodeWidget<R extends RenderNode> extends MultiChildRenderObjectWidget {
   /// [ParsingNode.createWidget] methods of the [ChildrenNode.children].
   /// Logically, you will not specify children
   /// if this is constructed from a [LeafNode].
-  NodeWidget(this.context, this.createRenderNode, {List<NodeWidget> children})
-      : assert(context != null),
-        super(
+  NodeWidget(this.context, this.createRenderNode, {List<NodeWidget>? children})
+      : super(
           children: children ?? [],
           // If the widget changes, the render object should also change.
           // Widgets are only updated when a different input is parsed

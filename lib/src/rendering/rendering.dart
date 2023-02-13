@@ -55,8 +55,7 @@ abstract class RenderNode<P extends NodeParentData> extends RenderBox
   /// This should be used in [configure] when sizing children.
   /// It calls [RenderBox.layout] with no constraints
   /// (see [RenderTree.performLayout]) and configures the [renderSize].
-  Size sizeChildNode(RenderNode child) {
-    assert(constraints != null, 'Do no call sizeChildNode on a child.');
+  Size? sizeChildNode(RenderNode child) {
     child._renderSize = null;
     child.layout(constraints);
     return child.renderSize;
@@ -66,7 +65,7 @@ abstract class RenderNode<P extends NodeParentData> extends RenderBox
   ///
   /// This should be called in [configure] on children to position them.
   void positionNode(Offset offset) {
-    parentData.offset = offset;
+    parentData!.offset = offset;
 
     // Ignoring use_setters_to_change_properties does not work. Hence,
     // this unnecessary statement makes the linter think that this method
@@ -78,20 +77,22 @@ abstract class RenderNode<P extends NodeParentData> extends RenderBox
 
   /// Allows to paint a child node in [render].
   void paintChildNode(RenderNode child) {
-    _context.paintChild(child, child.parentData.offset);
+    _context!.paintChild(child, child.parentData!.offset);
   }
 
   /// List of child [RenderNode]s.
-  List<RenderNode> children;
+  late List<RenderNode> children;
 
-  Size _renderSize;
+  Size? _renderSize;
 
   /// The size that CaTeX determines for this node.
-  Size get renderSize => _renderSize;
+  Size? get renderSize => _renderSize;
 
-  set renderSize(Size value) {
-    assert(_renderSize == null,
-        'Only assign the size once every configuration call.');
+  set renderSize(Size? value) {
+    assert(
+      _renderSize == null,
+      'Only assign the size once every configuration call.',
+    );
 
     if (value == _renderSize) return;
     _renderSize = value;
@@ -114,11 +115,11 @@ abstract class RenderNode<P extends NodeParentData> extends RenderBox
   void attach(PipelineOwner owner) {
     super.attach(owner);
 
-    parentData.context = context;
+    parentData!.context = context;
   }
 
   @override
-  NodeParentData get parentData => super.parentData as NodeParentData;
+  NodeParentData? get parentData => super.parentData as NodeParentData?;
 
   @override
   bool get sizedByParent => false;
@@ -128,15 +129,15 @@ abstract class RenderNode<P extends NodeParentData> extends RenderBox
   ///
   /// This is because CaTeX does not respond to hit events.
   @override
-  bool hitTest(BoxHitTestResult result, {Offset position}) => true;
+  bool hitTest(BoxHitTestResult result, {Offset? position}) => true;
 
   @override
   void performLayout() {
     children = [];
 
-    var child = firstChild;
+    RenderNode<NodeParentData>? child = firstChild;
     while (child != null) {
-      final parentData = child.parentData as P;
+      final parentData = child.parentData!;
 
       children.add(child);
 
@@ -145,18 +146,24 @@ abstract class RenderNode<P extends NodeParentData> extends RenderBox
 
     assert(_renderSize == null, 'Use sizeChildNode to size children.');
     configure();
-    assert(_renderSize != null,
-        'Render nodes need to set renderSize in configure.');
+    assert(
+      _renderSize != null,
+      'Render nodes need to set renderSize in configure.',
+    );
 
     super.size = Size(
-      min(constraints.biggest.width,
-          max(constraints.smallest.width, _renderSize.width)),
-      min(constraints.biggest.height,
-          max(constraints.smallest.height, _renderSize.height)),
+      min(
+        constraints.biggest.width,
+        max(constraints.smallest.width, _renderSize!.width),
+      ),
+      min(
+        constraints.biggest.height,
+        max(constraints.smallest.height, _renderSize!.height),
+      ),
     );
   }
 
-  PaintingContext _context;
+  PaintingContext? _context;
 
   @override
   void paint(PaintingContext context, Offset offset) {
@@ -180,6 +187,7 @@ abstract class RenderNode<P extends NodeParentData> extends RenderBox
 /// implements [RenderNode.configure] and [RenderNode.paint] by simply
 /// delegating it to the child without modification.
 mixin SingleChildRenderNodeMixin<P extends NodeParentData> on RenderNode<P> {
+  // ignore: public_member_api_docs
   RenderNode get child => children[0];
 
   @override
@@ -193,18 +201,21 @@ mixin SingleChildRenderNodeMixin<P extends NodeParentData> on RenderNode<P> {
   }
 }
 
+// ignore: public_member_api_docs
 class NodeParentData extends ContainerBoxParentData<RenderNode> {
-  CaTeXContext _context;
+  CaTeXContext? _context;
 
+  // ignore: public_member_api_docs
   CaTeXContext get context {
-    assert(_context != null,
-        'A render node must assign a non-null context in attach.');
-    return _context;
+    assert(
+      _context != null,
+      'A render node must assign a non-null context in attach.',
+    );
+    return _context!;
   }
 
+  // ignore: public_member_api_docs
   set context(CaTeXContext value) {
-    assert(value != null);
-
     if (value == _context) return;
     _context = value;
   }
@@ -214,14 +225,14 @@ class NodeParentData extends ContainerBoxParentData<RenderNode> {
 /// and the rest of the widget tree and also tells the compositor to cache it.
 class RenderTree extends RenderBox with RenderObjectWithChildMixin<RenderNode> {
   /// Constructs [RenderTree].
-  RenderTree(CaTeXContext context)
-      : assert(context != null),
-        _context = context;
+  RenderTree(CaTeXContext context) : _context = context;
 
   CaTeXContext _context;
 
+  // ignore: public_member_api_docs
   CaTeXContext get context => _context;
 
+  // ignore: public_member_api_docs
   set context(CaTeXContext value) {
     if (_context == value) return;
 
@@ -244,10 +255,10 @@ class RenderTree extends RenderBox with RenderObjectWithChildMixin<RenderNode> {
   bool get sizedByParent => false;
 
   @override
-  RenderNode<NodeParentData> get child => super.child;
+  RenderNode<NodeParentData>? get child => super.child;
 
   @override
-  bool hitTest(BoxHitTestResult result, {Offset position}) => true;
+  bool hitTest(BoxHitTestResult result, {Offset? position}) => true;
 
   @override
   void visitChildrenForSemantics(RenderObjectVisitor visitor) {
@@ -264,7 +275,7 @@ class RenderTree extends RenderBox with RenderObjectWithChildMixin<RenderNode> {
       ..isMergingSemanticsOfDescendants = true
       ..isReadOnly = true
       ..textDirection = TextDirection.ltr
-      ..label = _context.input;
+      ..label = _context.input!;
   }
 
   static const _commonLayoutExceptionSuffix = 'for CaTeX to take up '
@@ -276,11 +287,11 @@ class RenderTree extends RenderBox with RenderObjectWithChildMixin<RenderNode> {
       'note that the overflow is still rendered, just clipped. Thus, having '
       'an overflow is not optimal for performance.)';
 
-  Size _treeSize;
+  Size? _treeSize;
 
   /// Does a mock layout pass and returns the size the tree would need to be
   /// painted without clipping.
-  Size _computeIntrinsicDimensions() {
+  Size? _computeIntrinsicDimensions() {
     /// Not considering the width as the only effect of that would be throwing
     /// the exception about clipping. That exception will then be thrown again
     /// during the actual layout phase - so we can just ignore the constraints
@@ -292,75 +303,75 @@ class RenderTree extends RenderBox with RenderObjectWithChildMixin<RenderNode> {
   @override
   double computeMinIntrinsicWidth(double height) {
     assert(height >= 0);
-    return _computeIntrinsicDimensions().width;
+    return _computeIntrinsicDimensions()!.width;
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
     assert(height >= 0);
-    return _computeIntrinsicDimensions().width;
+    return _computeIntrinsicDimensions()!.width;
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
     assert(width >= 0);
-    return _computeIntrinsicDimensions().height;
+    return _computeIntrinsicDimensions()!.height;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
     assert(width >= 0);
-    return _computeIntrinsicDimensions().height;
+    return _computeIntrinsicDimensions()!.height;
   }
 
   @override
   void performLayout() {
-    child.parentData.offset = Offset.zero;
+    child!.parentData!.offset = Offset.zero;
 
-    child._renderSize = null;
+    child!._renderSize = null;
     // We do not care about the constraints for the children. If the
     // tree turns out to take up too much space, we will simply clip it
     // and inform the developer that there is not enough space.
-    child.layout(constraints);
-    _treeSize = child.renderSize;
+    child!.layout(constraints);
+    _treeSize = child!.renderSize;
 
     size = Size(
-      min(constraints.maxWidth, max(constraints.minWidth, _treeSize.width)),
-      min(constraints.maxHeight, max(constraints.minHeight, _treeSize.height)),
+      min(constraints.maxWidth, max(constraints.minWidth, _treeSize!.width)),
+      min(constraints.maxHeight, max(constraints.minHeight, _treeSize!.height)),
     );
 
     // Throwing the exceptions here will make sure that the developer can
     // see that the rendered output overflows and still render the result.
     // This means that effectively these exceptions do not interrupt rendering
     // at all. The output is simply clipped.
-    if (_treeSize.width > constraints.maxWidth &&
-        _treeSize.height > constraints.maxHeight) {
+    if (_treeSize!.width > constraints.maxWidth &&
+        _treeSize!.height > constraints.maxHeight) {
       throw RenderingException(
         reason: 'Tree exceeds both the width constraint (actual: '
-            '${_treeSize.width}; constraint: ${constraints.maxWidth}) '
-            'and the height constraint (actual: ${_treeSize.height}; '
+            '${_treeSize!.width}; constraint: ${constraints.maxWidth}) '
+            'and the height constraint (actual: ${_treeSize!.height}; '
             'constraint: ${constraints.maxHeight}); '
             'the output will be clipped - consider providing '
             'larger width and height constraints $_commonLayoutExceptionSuffix',
-        input: child.context.input,
+        input: child!.context.input!,
       );
     }
-    if (_treeSize.width > constraints.maxWidth) {
+    if (_treeSize!.width > constraints.maxWidth) {
       throw RenderingException(
         reason: 'Tree exceeds the width constraint (actual: '
-            '${_treeSize.width}; constraint: ${constraints.maxWidth}); '
+            '${_treeSize!.width}; constraint: ${constraints.maxWidth}); '
             'the output will be clipped - consider providing a larger '
             'width constraint $_commonLayoutExceptionSuffix',
-        input: child.context.input,
+        input: child!.context.input!,
       );
-    } else if (_treeSize.height > constraints.maxHeight) {
+    } else if (_treeSize!.height > constraints.maxHeight) {
       throw RenderingException(
         reason: 'Tree exceeds the height constraint '
-            '(actual: ${_treeSize.height}; constraint: '
+            '(actual: ${_treeSize!.height}; constraint: '
             '${constraints.maxHeight}); the output will be clipped - consider '
             'providing a larger height constraint '
             '$_commonLayoutExceptionSuffix',
-        input: child.context.input,
+        input: child!.context.input!,
       );
     }
   }
@@ -372,8 +383,8 @@ class RenderTree extends RenderBox with RenderObjectWithChildMixin<RenderNode> {
 
     // Even if the tree overflows, render it anyway and clip the overflow.
     // This is a very easy solution.
-    context.clipRectAndPaint(offset & size, Clip.hardEdge, null, () {
-      context.paintChild(child, offset + child.parentData.offset);
+    context.clipRectAndPaint(offset & size, Clip.hardEdge, Rect.zero, () {
+      context.paintChild(child!, offset + child!.parentData!.offset);
     });
   }
 }

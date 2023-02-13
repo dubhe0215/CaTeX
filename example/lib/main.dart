@@ -161,9 +161,12 @@ class _TextFieldEquationState extends State<_TextFieldEquation> {
   }
 }
 
+// ignore: public_member_api_docs
 class ToggleEquation extends StatefulWidget {
+  // ignore: public_member_api_docs
   const ToggleEquation(this.equation, {Key key}) : super(key: key);
 
+  // ignore: public_member_api_docs
   final String equation;
 
   @override
@@ -185,7 +188,7 @@ class _ToggleEquationState extends State<ToggleEquation> {
       return Text(
         widget.equation,
         // ignore: deprecated_member_use
-        style: Theme.of(context).textTheme.subhead,
+        style: Theme.of(context).textTheme.subtitle1,
         textAlign: TextAlign.center,
       );
     }

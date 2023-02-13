@@ -15,7 +15,6 @@ import 'package:catex/src/parsing/functions/sub_sup.dart';
 import 'package:catex/src/parsing/functions/text.dart';
 import 'package:catex/src/parsing/functions/text_color.dart';
 import 'package:catex/src/parsing/parsing.dart';
-import 'package:flutter/foundation.dart';
 
 /// Enumeration of supported CaTeX function.
 ///
@@ -227,10 +226,10 @@ const List<CaTeXFunction> supportedTextFunctions = [
 /// [supportedFunctionNames] *and* this function is in [supportedMathFunctions]
 /// in math mode or in [supportedTextFunctions]
 /// in text mode. Otherwise, this function returns `null`.
-FunctionNode lookupFunction(ParsingContext context) {
-  final input = context.input,
-      mode = context.mode,
-      function = supportedFunctionNames[input];
+FunctionNode? lookupFunction(ParsingContext context) {
+  final input = context.input;
+  final CaTeXMode mode = context.mode;
+  final CaTeXFunction? function = supportedFunctionNames[input];
 
   switch (mode) {
     case CaTeXMode.math:
@@ -286,6 +285,7 @@ FunctionNode lookupFunction(ParsingContext context) {
     case CaTeXFunction.textIt:
     case CaTeXFunction.textUp:
       return TextNode(context);
+    default:
   }
   // Not adding a default clause will make
   // the IDE help to add missing clauses.
@@ -299,11 +299,9 @@ class FunctionProperties {
   /// Constructs [FunctionProperties] from the number of [arguments] and
   /// a [greediness] value.
   const FunctionProperties({
-    @required this.arguments,
-    @required this.greediness,
-  })  : assert(arguments != null),
-        assert(greediness != null),
-        assert(arguments > 0),
+    required this.arguments,
+    required this.greediness,
+  })  : assert(arguments > 0),
         assert(greediness > 0);
 
   /// Defines how many groups after itself a function will consume.
