@@ -10,7 +10,7 @@ import 'package:catex/src/widgets.dart';
 /// [ParsingNode] for [CaTeXFunction.hat].
 class HatNode extends SingleChildNode with FunctionNode {
   /// Constructs a [HatNode] given a [context].
-  HatNode(ParsingContext context) : super(context);
+  HatNode(super.context);
 
   @override
   FunctionProperties get properties =>

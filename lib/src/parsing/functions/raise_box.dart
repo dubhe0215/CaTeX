@@ -9,7 +9,7 @@ import 'package:catex/src/widgets.dart';
 class RaiseBoxNode extends MultiChildNode<RenderRaiseBox>
     with FunctionNode<RenderRaiseBox> {
   /// Constructs a [RaiseBoxNode] from a [context].
-  RaiseBoxNode(ParsingContext context) : super(context);
+  RaiseBoxNode(super.context);
 
   @override
   FunctionProperties get properties =>

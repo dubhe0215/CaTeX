@@ -7,7 +7,7 @@ import 'package:catex/src/widgets.dart';
 // ignore: public_member_api_docs
 class BoxedNode extends SingleChildNode<RenderBoxed> with FunctionNode {
   // ignore: public_member_api_docs
-  BoxedNode(ParsingContext context) : super(context);
+  BoxedNode(super.context);
 
   @override
   FunctionProperties get properties =>

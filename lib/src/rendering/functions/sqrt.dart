@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:catex/src/lookup/context.dart';
 import 'package:catex/src/lookup/modes.dart';
 import 'package:catex/src/lookup/symbols.dart';
 import 'package:catex/src/rendering/character.dart';
@@ -10,7 +9,7 @@ import 'package:flutter/rendering.dart';
 // ignore: public_member_api_docs
 class RenderSqrt extends RenderNode with SingleChildRenderNodeMixin {
   // ignore: public_member_api_docs
-  RenderSqrt(CaTeXContext context) : super(context);
+  RenderSqrt(super.context);
 
   late TextPainter _surdPainter;
   late Paint _linePaint;

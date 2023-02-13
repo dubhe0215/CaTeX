@@ -1,4 +1,3 @@
-import 'package:catex/src/lookup/context.dart';
 import 'package:catex/src/parsing/functions/raise_box.dart';
 import 'package:catex/src/rendering/rendering.dart';
 
@@ -6,9 +5,9 @@ import 'package:catex/src/rendering/rendering.dart';
 class RenderRaiseBox extends RenderNode with SingleChildRenderNodeMixin {
   /// Constructs a [RenderRaiseBox] given a [context].
   RenderRaiseBox(
-    CaTeXContext context, {
+    super.context, {
     required this.shift,
-  }) : super(context);
+  });
 
   /// Vertical shift of the raise box in pixels.
   ///

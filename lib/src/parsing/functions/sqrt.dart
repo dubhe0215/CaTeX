@@ -8,7 +8,7 @@ import 'package:catex/src/widgets.dart';
 // ignore: public_member_api_docs
 class SqrtNode extends SingleChildNode with FunctionNode {
   // ignore: public_member_api_docs
-  SqrtNode(ParsingContext context) : super(context);
+  SqrtNode(super.context);
 
   @override
   FunctionProperties get properties =>

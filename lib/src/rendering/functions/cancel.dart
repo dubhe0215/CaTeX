@@ -1,12 +1,11 @@
 import 'dart:ui';
 
-import 'package:catex/src/lookup/context.dart';
 import 'package:catex/src/rendering/rendering.dart';
 
 /// [RenderNode] for [CancelNode].
 class RenderCancel extends RenderNode {
   /// Constructs a [RenderCancel] given a [context].
-  RenderCancel(CaTeXContext context) : super(context);
+  RenderCancel(super.context);
 
   @override
   void configure() {

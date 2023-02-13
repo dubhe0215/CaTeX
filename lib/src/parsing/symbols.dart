@@ -10,9 +10,7 @@ import 'package:catex/src/widgets.dart';
 // ignore: public_member_api_docs
 class SymbolNode extends LeafNode<RenderSymbol> {
   // ignore: public_member_api_docs
-  SymbolNode(ParsingContext context)
-      : _context = context,
-        super(context);
+  SymbolNode(super.context) : _context = context;
 
   final ParsingContext _context;
 

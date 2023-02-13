@@ -6,7 +6,7 @@ import 'package:catex/src/widgets.dart';
 // ignore: public_member_api_docs
 class EmptyNode extends LeafNode<RenderEmpty> {
   // ignore: public_member_api_docs
-  EmptyNode(ParsingContext context) : super(context);
+  EmptyNode(super.context);
 
   @override
   NodeWidget<RenderEmpty> configureWidget(CaTeXContext context) {

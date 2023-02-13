@@ -7,9 +7,7 @@ import 'package:catex/src/widgets.dart';
 /// [ParsingNode] for all regular character.
 class CharacterNode extends LeafNode<RenderCharacter> {
   /// Constructs a [CharacterNode] from a [context].
-  CharacterNode(ParsingContext context)
-      : _context = context,
-        super(context);
+  CharacterNode(super.context) : _context = context;
 
   /// Stores the [ParsingContext] for a workaround solution.
   final ParsingContext _context;

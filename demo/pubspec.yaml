@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 0.0.1
 
 environment:
-  sdk: ">=2.8.4 <3.0.0"
+  sdk: ">=2.18.5 <3.0.0"
 
 dependencies:
   catex:
@@ -13,7 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  url_launcher: ^5.4.11
+  url_launcher: ^6.1.9
 
 
 dev_dependencies:

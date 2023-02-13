@@ -11,7 +11,7 @@ import 'package:catex/src/widgets.dart';
 class FontNode extends SingleChildNode<RenderFont>
     implements FunctionNode<RenderFont> {
   // ignore: public_member_api_docs
-  FontNode(ParsingContext context) : super(context);
+  FontNode(super.context);
 
   @override
   FunctionProperties get properties =>

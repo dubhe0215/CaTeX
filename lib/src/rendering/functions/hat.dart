@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:catex/src/lookup/context.dart';
 import 'package:catex/src/lookup/modes.dart';
 import 'package:catex/src/lookup/symbols.dart';
 import 'package:catex/src/parsing/functions/hat.dart';
@@ -13,7 +12,7 @@ import 'package:flutter/rendering.dart';
 /// [RenderNode] for [HatNode].
 class RenderHat extends RenderNode with SingleChildRenderNodeMixin {
   /// Constructs a [HatNode] given a [context].
-  RenderHat(CaTeXContext context) : super(context);
+  RenderHat(super.context);
 
   late TextPainter _hatPainter;
 

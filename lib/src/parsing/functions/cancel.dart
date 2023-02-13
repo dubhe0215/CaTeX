@@ -10,7 +10,7 @@ import 'package:catex/src/widgets.dart';
 class CancelNode extends SingleChildNode<RenderCancel>
     with FunctionNode<RenderCancel> {
   /// Constructs a [CancelNode] given a [context].
-  CancelNode(ParsingContext context) : super(context);
+  CancelNode(super.context);
 
   @override
   FunctionProperties get properties =>

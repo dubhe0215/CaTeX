@@ -70,7 +70,7 @@ void main() {
 /// Example app widget that uses [MaterialApp] to display CaTeX output.
 class App extends StatelessWidget {
   /// Constructs the example [App].
-  const App({Key key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class App extends StatelessWidget {
 /// and a text field to test out CaTeX.
 class Home extends StatelessWidget {
   /// Constructs a [Home] widget.
-  const Home({Key key}) : super(key: key);
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -116,16 +116,16 @@ class Home extends StatelessWidget {
 }
 
 class _TextFieldEquation extends StatefulWidget {
-  const _TextFieldEquation({Key key}) : super(key: key);
+  const _TextFieldEquation();
 
   @override
   State createState() => _TextFieldEquationState();
 }
 
 class _TextFieldEquationState extends State<_TextFieldEquation> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
 
-  bool _input;
+  late bool _input;
 
   @override
   void initState() {
@@ -164,7 +164,7 @@ class _TextFieldEquationState extends State<_TextFieldEquation> {
 // ignore: public_member_api_docs
 class ToggleEquation extends StatefulWidget {
   // ignore: public_member_api_docs
-  const ToggleEquation(this.equation, {Key key}) : super(key: key);
+  const ToggleEquation(this.equation, {super.key});
 
   // ignore: public_member_api_docs
   final String equation;
@@ -174,7 +174,7 @@ class ToggleEquation extends StatefulWidget {
 }
 
 class _ToggleEquationState extends State<ToggleEquation> {
-  bool _showSource;
+  late bool _showSource;
 
   @override
   void initState() {
@@ -212,7 +212,7 @@ class _ToggleEquationState extends State<ToggleEquation> {
 }
 
 class _Highlighted extends StatelessWidget {
-  const _Highlighted({Key key, this.child}) : super(key: key);
+  const _Highlighted({required this.child});
 
   final Widget child;
 

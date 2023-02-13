@@ -582,9 +582,7 @@ abstract class ParsingNode<R extends RenderNode> {
 /// or [SingleChildNode] depending on the number of children.
 abstract class ChildrenNode<R extends RenderNode> extends ParsingNode<R> {
   /// Constructs a [ChildrenNode] given a [context].
-  ChildrenNode(ParsingContext context)
-      : _children = [],
-        super(context);
+  ChildrenNode(super.context) : _children = [];
 
   /// List of child nodes.
   ///
@@ -601,7 +599,7 @@ abstract class ChildrenNode<R extends RenderNode> extends ParsingNode<R> {
 /// If a node only has a single child, subclass [SingleChildNode] instead.
 abstract class MultiChildNode<R extends RenderNode> extends ChildrenNode<R> {
   /// Constructs a [MultiChildNode] given a [context].
-  MultiChildNode(ParsingContext context) : super(context);
+  MultiChildNode(super.context);
 
   /// Returns the full list of children that a [ChildrenNode] stores.
   List<ParsingNode?> get children => _children;
@@ -612,7 +610,7 @@ abstract class MultiChildNode<R extends RenderNode> extends ChildrenNode<R> {
 /// If a node has multiple children, subclass [MultiChildNode] instead.
 abstract class SingleChildNode<R extends RenderNode> extends ChildrenNode<R> {
   /// Constructs a [SingleChildNode] given a [context].
-  SingleChildNode(ParsingContext context) : super(context);
+  SingleChildNode(super.context);
 
   /// Returns the single child accessible to a [SingleChildNode].
   ParsingNode? get child => _children[0];
@@ -636,5 +634,5 @@ mixin FunctionNode<R extends RenderNode> on ChildrenNode<R> {
 /// An example for this are symbols.
 abstract class LeafNode<R extends RenderNode> extends ParsingNode<R> {
   /// Constructs a [LeafNode] given a [context].
-  LeafNode(ParsingContext context) : super(context);
+  LeafNode(super.context);
 }

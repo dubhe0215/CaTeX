@@ -8,7 +8,7 @@ import 'package:catex/src/widgets.dart';
 class SubSupNode extends SingleChildNode<RenderSubSup>
     with FunctionNode<RenderSubSup> {
   // ignore: public_member_api_docs
-  SubSupNode(ParsingContext context) : super(context);
+  SubSupNode(super.context);
 
   @override
   FunctionProperties get properties =>

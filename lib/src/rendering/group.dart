@@ -15,9 +15,9 @@ import 'package:catex/src/rendering/rendering.dart';
 class RenderGroup extends RenderNode {
   /// Constructs a [RenderGroup] given a [context] and a [mode].
   RenderGroup(
-    CaTeXContext context,
+    super.context,
     this.mode,
-  ) : super(context);
+  );
 
   // todo: remove workaround soltion
   /// The [CaTeXMode] this group should be configured in.

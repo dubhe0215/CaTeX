@@ -8,7 +8,7 @@ import 'package:catex/src/widgets.dart';
 class FracNode extends MultiChildNode<RenderFrac>
     with FunctionNode<RenderFrac> {
   // ignore: public_member_api_docs
-  FracNode(ParsingContext context) : super(context);
+  FracNode(super.context);
 
   @override
   FunctionProperties get properties =>

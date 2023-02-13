@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:catex/src/lookup/context.dart';
 import 'package:catex/src/parsing/functions/kern.dart';
 import 'package:catex/src/rendering/group.dart';
 import 'package:catex/src/rendering/rendering.dart';
@@ -9,9 +8,9 @@ import 'package:catex/src/rendering/rendering.dart';
 class RenderKern extends RenderNode {
   /// Constructs a [RenderKern] given a [context].
   RenderKern(
-    CaTeXContext context, {
+    super.context, {
     required this.space,
-  }) : super(context);
+  });
 
   /// Horizontal space of the kern in pixels.
   ///

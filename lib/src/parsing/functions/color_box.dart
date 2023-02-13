@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 /// [ParsingNode] for [CaTeXFunction.colorBox].
 class ColorBoxNode extends MultiChildNode<RenderColorBox> with FunctionNode {
   /// Constructs a [ColorBoxNode] given a [context].
-  ColorBoxNode(ParsingContext context) : super(context);
+  ColorBoxNode(super.context);
 
   @override
   FunctionProperties get properties =>

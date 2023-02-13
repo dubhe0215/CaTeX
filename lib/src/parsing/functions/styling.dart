@@ -8,7 +8,7 @@ import 'package:catex/src/widgets.dart';
 class StylingNode extends SingleChildNode<RenderStyling>
     with FunctionNode<RenderStyling> {
   /// Constructs a [StylingNode] from a [context].
-  StylingNode(ParsingContext context) : super(context);
+  StylingNode(super.context);
 
   @override
   FunctionProperties get properties =>

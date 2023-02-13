@@ -11,9 +11,9 @@ import 'package:flutter/rendering.dart';
 class RenderCharacter extends RenderNode {
   /// Constructs a [CharacterNode] from a [context] and an optional [symbol].
   RenderCharacter(
-    CaTeXContext context, {
+    super.context, {
     this.symbol,
-  }) : super(context);
+  });
 
   /// Stores the symbol resolved from the [context]'s input for a rendering
   /// workaround.

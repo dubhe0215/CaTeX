@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 /// Demo application for CaTeX.
 class DemoApp extends StatelessWidget {
   /// Constructs a [DemoApp].
-  const DemoApp({Key key}) : super(key: key);
+  const DemoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class DemoApp extends StatelessWidget {
         url: gitHubUrl,
         child: Image.network(gitHubIconUrl),
       ),
-      const LinkButton(
+      LinkButton(
         label: docsLabel,
         url: docsUrl,
       ),
@@ -48,7 +48,7 @@ class DemoApp extends StatelessWidget {
                 cursor: MaterialStateMouseCursor.clickable,
                 child: GestureDetector(
                   onTap: () {
-                    launch(katexUrl);
+                    launchUrl(Uri.parse(katexUrl));
                   },
                   child: DefaultTextStyle.merge(
                     style: const TextStyle(fontSize: 48),
@@ -95,7 +95,7 @@ class DemoApp extends StatelessWidget {
                                   ],
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline5
+                                      .headlineSmall!
                                       .copyWith(
                                         fontSize: 28,
                                       ),
@@ -130,7 +130,7 @@ class DemoApp extends StatelessWidget {
                               editorHeadline,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline5
+                                  .headlineSmall!
                                   .copyWith(
                                     fontStyle: FontStyle.italic,
                                   ),
@@ -159,7 +159,7 @@ class DemoApp extends StatelessWidget {
               cursor: MaterialStateMouseCursor.clickable,
               child: GestureDetector(
                 onTap: () {
-                  launch(organizationUrl);
+                  launchUrl(Uri.parse(organizationUrl));
                 },
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 264),

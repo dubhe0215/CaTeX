@@ -13,7 +13,7 @@ import 'package:catex/src/widgets.dart';
 class TextNode extends SingleChildNode<RenderText>
     with FunctionNode<RenderText> {
   /// Constructs a [TextNode] from a [context].
-  TextNode(ParsingContext context) : super(context);
+  TextNode(super.context);
 
   @override
   FunctionProperties get properties =>

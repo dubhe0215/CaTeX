@@ -8,7 +8,7 @@ import 'package:catex/src/widgets.dart';
 /// [ParsingNode] for [CaTeXFunction.textColor].
 class TextColorNode extends MultiChildNode<RenderTextColor> with FunctionNode {
   /// Constructs a [TextColorNode] given a [context].
-  TextColorNode(ParsingContext context) : super(context);
+  TextColorNode(super.context);
 
   @override
   FunctionProperties get properties =>

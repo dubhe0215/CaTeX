@@ -41,10 +41,9 @@ const startParsingMode = CaTeXMode.math;
 /// [DefaultTextStyle].
 class CaTeX extends StatefulWidget {
   /// Constructs a [CaTeX] widget from an [input] string.
-  const CaTeX(this.input, {Key? key})
+  const CaTeX(this.input, {super.key})
       // ignore: unnecessary_null_comparison
-      : assert(input != null),
-        super(key: key);
+      : assert(input != null);
 
   /// TeX input string that should be rendered by CaTeX.
   final String input;
@@ -103,10 +102,10 @@ class _CaTeXState extends State<CaTeX> {
 
 class _TreeWidget extends SingleChildRenderObjectWidget {
   _TreeWidget(
-    NodeWidget child, {
-    Key? key,
-  })  : _context = child.context,
-        super(child: child, key: key);
+    NodeWidget child,
+    // {super.key,}
+  )   : _context = child.context,
+        super(child: child);
 
   final CaTeXContext _context;
 

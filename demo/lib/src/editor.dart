@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 /// Widget that allows editing a CaTeX input and displays its output.
 class CaTeXEditor extends StatefulWidget {
   /// Constructs a [CaTeXEditor].
-  const CaTeXEditor({Key key}) : super(key: key);
+  const CaTeXEditor({super.key});
 
   @override
   State createState() => _CaTeXEditorState();
 }
 
 class _CaTeXEditorState extends State<CaTeXEditor> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
 
   @override
   void initState() {

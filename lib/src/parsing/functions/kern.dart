@@ -9,7 +9,7 @@ import 'package:catex/src/widgets.dart';
 class KernNode extends SingleChildNode<RenderKern>
     with FunctionNode<RenderKern> {
   /// Constructs a [KernNode] from a [context].
-  KernNode(ParsingContext context) : super(context);
+  KernNode(super.context);
 
   @override
   FunctionProperties get properties =>
